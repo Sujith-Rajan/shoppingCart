@@ -1,0 +1,35 @@
+<h2 class="text-center mt-5">Login</h2>
+<form style="width:22rem" class="mx-auto mt-3" action="/userLogin" method="POST">
+  <!-- Email input -->
+  {{#if loginErr}}
+  <p class="error">{{loginErr}}</p>
+
+  {{/if}}
+  <div class="form-outline mb-4" >
+    <label class="form-label" for="form2Example1">Email address</label>
+    <input type="email" name="Email" class="form-control" />
+    
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+    <label class="form-label" for="form2Example2">Password</label>
+    <input type="password" name="Password" class="form-control" />
+    
+  </div>
+
+  <!-- 2 column grid layout for inline styling -->
+
+    
+  </div>
+  <div class="row">
+    <div class="col">
+  <a href="/signUp">Create new account ?</a>
+</div>
+  <div class="col">
+<button type="submit" class="btn btn-primary float-right" style="width:8rem">Login</button>
+</div>
+</div>
+  
+  
+</form>
