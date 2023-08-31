@@ -30,4 +30,16 @@ router.post("/signUp", (req, res) => {
     });
 });
 
+router.post('/userLogin',(req,res) =>{
+signUps.loginUser(req.body).then((response)=>{
+  if(response.status){
+    res.redirect('/')
+
+  }else{
+    res.redirect('/userLogin')
+  }
+})
+})
+
 module.exports = router;
+ 
