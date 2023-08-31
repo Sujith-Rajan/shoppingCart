@@ -7,9 +7,10 @@ var signUps = require("../operations/signUp");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  let user = req.session.user
     prdctInserts.getAllProducts().then((products) => {
       // console.log(products)
-        res.render("user/userView", { products });
+        res.render("user/userView", {products,user});
     });
 });
 // ----------------------------------------------------------------------------------
@@ -33,12 +34,19 @@ router.post("/signUp", (req, res) => {
 router.post('/userLogin',(req,res) =>{
 signUps.loginUser(req.body).then((response)=>{
   if(response.status){
+    req.session.loggedIn = true
+    req.session.user = response.user
     res.redirect('/')
 
   }else{
     res.redirect('/userLogin')
   }
 })
+})
+
+router.get("/UserLogout",(req,res)=>{
+  req.session.destroy()
+  res.redirect('/userLogin')
 })
 
 module.exports = router;

@@ -9,8 +9,9 @@ var adminRouter = require("./routes/admin");
 
 var hbs = require("express-handlebars");
 var fileupload = require("express-fileupload");
-
+var session = require('express-session')
 var app = express();
+
 
 // view engine setup
 
@@ -33,6 +34,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(fileupload());
+app.use(session({secret:'secretkey',cookie:{maxAge:600000}}))
  
 
 //db connection intiliazed-----------------
