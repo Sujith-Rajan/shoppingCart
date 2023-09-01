@@ -9,11 +9,15 @@
                                 <a class="nav-link active" aria-current="page" href="#">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/">Products</a>
+                                <a class="nav-link" href="/cart">Cart</a>
                             </li>
-                            <li class="nav-item">
+                            
+                                {{#if user}}
+                                <li class="nav-item"></li>
                                 <a class="nav-link" href="#">Orders</a>
-                            </li>
+                                 </li>
+                                {{/if}}
+                           
                             <li class="nav-item dropdown">
                                 <a
                                     class="nav-link dropdown-toggle"

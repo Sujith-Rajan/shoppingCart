@@ -11,7 +11,7 @@ var hbs = require("express-handlebars");
 var fileupload = require("express-fileupload");
 var session = require('express-session')
 var app = express();
-
+const nocache = require('nocache');
 
 // view engine setup
 
@@ -35,7 +35,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(fileupload());
 app.use(session({secret:'secretkey',cookie:{maxAge:600000}}))
- 
+app.use((req, res, next) => {
+    res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
+    
+    next();
+  });
 
 //db connection intiliazed-----------------
 db.connect((err)=>{

@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var prdctInserts = require('../productsOperation/prdctInsert')
 
+const { response } = require('../app');
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   
@@ -32,5 +34,16 @@ router.post('/adminAddProducts',(req,res)=>{
     
    });
 })
+router.get('/delete-product/',(req,res)=>{
+  let prdctId= req.query.id
+  console.log(prdctId)
+  prdctInserts.deleteProducts(prdctId).then((response) =>{
+    res.redirect('/admin/')
 
+  })
+
+})
+// router.get('edit-product',(req,res)=>{
+
+// })
 module.exports = router;
