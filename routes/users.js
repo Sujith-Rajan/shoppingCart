@@ -66,4 +66,11 @@ router.get('/cart',verifyLogin, (req,res) =>{
   res.render('user/cart')
   
 })
+
+router.get('/addToCart/:id',verifyLogin,(req,res)=>{
+  signUps.addToCart(req.params.id,req.session.user._id).then(()=>{
+    res.redirect('/')
+  })
+
+})
 module.exports = router;

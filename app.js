@@ -18,6 +18,8 @@ const nocache = require('nocache');
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
+app.set('partials', true);
+
 app.engine(
     "hbs",
     hbs.engine({
