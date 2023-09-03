@@ -1,15 +1,14 @@
-function addToCartAjax(productId){
-    console.log(productId)
+function addToCart(proId){
     $.ajax({
-        url:'/addToCart/'+productId,
+        url:'/add-to-cart/'+proId,
         method:'get',
-        success:(response) =>{
+        success:(response)=>{
             if(response.status){
-                let count =$('#cart-count').html()
-                count =parseInt(count)+1
-                $('#cart-count').html(count)
+                let count=$('#cart-count').html()
+                count=parseInt(count)+1
+                $("#cart-count").html(count)
             }
-            //  alert(response)
+           
         }
     })
 }
