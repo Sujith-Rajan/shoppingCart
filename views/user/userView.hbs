@@ -11,7 +11,9 @@
                             <p class="card-text">{{this.price}}</p>
                              <p class="card-text">{{this.quantity}}</p>
 
-                            <a href="/addToCart/{{this._id}}" class="btn btn-primary">Add to cart</a>
+                            {{!-- <a href="/addToCart/{{this._id}}" class="btn btn-primary">Add to cart</a> --}}
+                            <button class="btn btn-primary" onclick="addToCartAjax('{{this._id}}')">Add to cart</button>
+                          
                         </div>
                     </div>
                 </div>

@@ -70,9 +70,12 @@ router.get("/cart", verifyLogin, async (req, res) => {
     res.render("user/cart", { cartProducts, user: req.session.user });
 });
 
-router.get("/addToCart/:id", verifyLogin, (req, res) => {
-    signUps.addToCart(req.params.id, req.session.user._id).then(() => {
-        res.redirect("/");
+router.get("/addToCart/:id",(req, res) => {
+  // console.log("api call")
+    signUps.addToCart(req.params.id,req.session.user._id).then(() => {
+        // res.redirect("/");
+        res.json({status:true})
+
     });
 });
 module.exports = router;
