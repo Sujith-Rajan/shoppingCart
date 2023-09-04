@@ -12,15 +12,17 @@
             <tbody>
                 {{#each cartProducts}}
                 <tr>
-                    {{#each this.product}}
-                    <td><img style="width:70px;height:70px" src="/product-image/{{this._id}}.jpg" alt="img"></td>
-                    <td>{{this.item}}</td>
-                     <td>{{this.price}}</td>
-                    {{/each}}
+                  
+                    <td><img style="width:70px;height:70px" src="/product-image/{{this.product._id}}.jpg" alt="img"></td>
+                    <td>{{this.product.item}}</td>
+                     <td>{{this.product.price}}</td>
+                   
                     
                    
                     <td>
-                        <button class="cart-item-count mr-5 btn btn-outline-secondary btn-sm">-</button>{{this.quantity}}<button class="cart-item-count mr-5 btn btn-outline-secondary btn-sm">+</button>
+                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                        <span id="{{this.product._id}}">{{this.quantity}}</span>
+                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}',1)">+</button>
                     </td>
                     <td>
                         <a href="" class="btn btn-danger">Remove</a>
@@ -32,3 +34,29 @@
         </table>
     </div>
 </section>
+<script>
+    function incrementAndDecrement(cartId,productId,change){
+        let quantity=parseInt(document.getElementById(productId).innerHTML)
+        change = parseInt(change)
+
+        $.ajax({
+            url:'/change-product-quantity',
+            data:{
+                cart:cartId,
+                product:productId,
+                change:change, 
+                quantity:quantity
+            },
+            method:'post',
+            success:(response) =>{
+                if(response.removeProduct){
+               return confirm("Product Removed from the Cart")
+           location.reload()
+              
+            }else{
+                document.getElementById(productId).innerHTML=quantity+change
+            }
+        }
+        })
+    }
+</script>
