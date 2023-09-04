@@ -86,54 +86,39 @@ module.exports = {
             }
         })
     },
-    // getCartProducts: (userId) => {
-    //     return new Promise(async (resolve, reject) => {
-    //         let cartItems = await db
-    //             .get()
-    //             .collection(collection.CART_COLLECTION)
-    //             .aggregate([
-    //                 {
-    //                     $match: { user: new objectId(userId) },
-    //                 },
-    //                 // {
-    //                 //     $lookup: {
-    //                 //         from: collection.PRODUCT_COLLECTION,
-    //                 //         let: { productsItems: "$products" },
-    //                 //         pipeline: [
-    //                 //             {
-    //                 //                 $match: {
-    //                 //                     $expr: {
-    //                 //                         $in: ["$_id", "$$productsItems"],
-    //                 //                     },
-    //                 //                 },
-    //                 //             },
-    //                 //         ],
-    //                 //         as: "cartItems",
-    //                 //     },
-    //                 // },
-    //                 {
-    //                     $unwind:'$products'
-    //                 },
-    //                 // {
-    //                 //     $project:{
-    //                 //         item:'$products.item',
-    //                 //         quantity:'$products.quantity'
-    //                 //     }
-    //                 // },
-    //                 // {
-    //                 //     $lookup:{
-    //                 //         from:collection.PRODUCT_COLLECTION,
-    //                 //         localfield:'item',
-    //                 //         foriegnfield:'id',
-    //                 //         as:'product'
-    //                 //     }
-    //                 // }
-    //             ])
-    //             .toArray();
-    //         console.log(cartItems[0].products);
-    //         resolve(cartItems[0].cartItems);
-    //     });
-    // },
+    getCartProducts: (userId) => {
+        return new Promise(async (resolve, reject) => {
+            let cartItems = await db
+                .get()
+                .collection(collection.CART_COLLECTION)
+                .aggregate([
+                    {
+                        $match: { user: new objectId(userId) },
+                    },
+                  
+                    {
+                        $unwind:'$products'
+                    },
+                    {
+                        $project:{
+                            item:'$products.item',
+                            quantity:'$products.quantity'
+                        }
+                    },
+                    {
+                        $lookup:{
+                            from:collection.PRODUCT_COLLECTION,
+                            localField:'item',
+                            foreignField:'_id',
+                            as:'product'
+                        }
+                    }
+                ])
+                .toArray();
+           console.log(cartItems);
+            resolve(cartItems);
+        });
+    },
     getCartCount: (userId) => {
         return new Promise(async (resolve, reject) => {
             let count = 0;
