@@ -83,4 +83,21 @@ router.post('/change-product-quantity',(req,res,next)=>{
 
     })
 })
+router.post('/remove-item/', (req, res,next) => {
+  
+   
+    signUps.removeItem(req.body).then((response) => {
+        res.json(response)
+        console.log(response)
+
+
+
+        
+    })
+    
+}); 
+router.get('/place-order',verifyLogin,async (req,res)=>{
+    let totalAmt= await signUps.getTotalAmount(req.session.user._id)
+    res.render('user/place-order')
+})
 module.exports = router;

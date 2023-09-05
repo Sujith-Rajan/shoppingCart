@@ -15,7 +15,7 @@
                   
                     <td><img style="width:70px;height:70px" src="/product-image/{{this.product._id}}.jpg" alt="img"></td>
                     <td>{{this.product.item}}</td>
-                     <td>{{this.product.price}}</td>
+                     <td>Rs.{{this.product.price}}/kg</td>
                    
                     
                    
@@ -25,13 +25,20 @@
                         <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}',1)">+</button>
                     </td>
                     <td>
-                        <a href="" class="btn btn-danger">Remove</a>
+                        {{!-- <a href="" class="btn btn-danger"  onclick="return confirm('Do you want to delete {{this.item}}?'>Remove</a> --}}
+                        {{!-- <a href="/user/remove-item?id={{this.item}}" class="btn btn-danger " onclick="return confirm('Do you want to delete {{this.product.item}}?')">Remove</a> --}}
+                        <button class="remove-item btn btn-danger " onclick="removeCartItem('{{this._id}}','{{this.product._id}}')">Remove</button>
                     </td>
 
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+        <hr>
+        <div class="float-right pr-5">
+        <h3 class="float-left mr-5">Total</h3>
+        <a href="/place-order" class=" btn btn-success  mt-3" style="width:40%;"><b>Place Order</b></a>
+        </div>
     </div>
 </section>
 <script>
@@ -59,4 +66,22 @@
         }
         })
     }
+    function removeCartItem(cartId,productId){
+    $.ajax({
+        url:'//remove-item',
+        data:{
+            cart:cartId,
+            product:productId,
+            
+        },
+        method:'post',
+        success:(response) =>{
+            if(response.removeProduct){
+           return confirm("Product Removed from the Cart")
+       location.reload()
+          
+        }
+    }
+    })
+}
 </script>

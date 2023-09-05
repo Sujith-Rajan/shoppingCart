@@ -12,3 +12,22 @@ function addToCart(proId){
         }
     })
 }
+//reomve items from cart
+// function removeCartItem(cartId,productId){
+//     $.ajax({
+//         url:'//remove-item',
+//         data:{
+//             cart:cartId,
+//             product:productId,
+            
+//         },
+//         method:'post',
+//         success:(response) =>{
+//             if(response.removeProduct){
+//            return confirm("Product Removed from the Cart")
+//        location.reload()
+          
+//         }
+//     }
+//     })
+// }
