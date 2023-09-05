@@ -7,6 +7,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Price</th>
                     <th scope="col">Quantity</th>
+                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -20,9 +21,9 @@
                     
                    
                     <td>
-                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}',-1)">-</button>
+                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}','{{../user._id}}',-1)">-</button>
                         <span id="{{this.product._id}}">{{this.quantity}}</span>
-                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}',1)">+</button>
+                        <button class="cart-item-count mr-3 btn btn-outline-secondary btn-sm" onclick="incrementAndDecrement('{{this._id}}','{{this.product._id}}','{{../user._id}}',1)">+</button>
                     </td>
                     <td>
                         {{!-- <a href="" class="btn btn-danger"  onclick="return confirm('Do you want to delete {{this.item}}?'>Remove</a> --}}
@@ -36,23 +37,26 @@
         </table>
         <hr>
         <div class="float-right pr-5">
-        <h3 class="float-left mr-5">Total</h3>
-        <a href="/place-order" class=" btn btn-success  mt-3" style="width:40%;"><b>Place Order</b></a>
+        <h3 class="float-left mr-5">Total: Rs. <span id="total">{{cartTotal}}</span></h3>
+        <a href="/place-order" class=" btn btn-success  mt-3" style="width:10%;"><b>Place Order</b></a>
         </div>
     </div>
 </section>
 <script>
-    function incrementAndDecrement(cartId,productId,change){
+    function incrementAndDecrement(cartId,productId,userId,change){
         let quantity=parseInt(document.getElementById(productId).innerHTML)
         change = parseInt(change)
-
+       
         $.ajax({
             url:'/change-product-quantity',
             data:{
+                user:userId,
                 cart:cartId,
                 product:productId,
                 change:change, 
                 quantity:quantity
+              
+                 
             },
             method:'post',
             success:(response) =>{
@@ -62,26 +66,14 @@
               
             }else{
                 document.getElementById(productId).innerHTML=quantity+change
+                document.getElementById("total").innerHTML=response.totalAmt
+                
             }
+        },
+        error: (error) => {
+        console.error("Error updating product quantity: ", error);
         }
         })
     }
-    function removeCartItem(cartId,productId){
-    $.ajax({
-        url:'//remove-item',
-        data:{
-            cart:cartId,
-            product:productId,
-            
-        },
-        method:'post',
-        success:(response) =>{
-            if(response.removeProduct){
-           return confirm("Product Removed from the Cart")
-       location.reload()
-          
-        }
-    }
-    })
-}
+   
 </script>

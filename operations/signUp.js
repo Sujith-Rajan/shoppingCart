@@ -158,7 +158,7 @@ module.exports = {
             }
             ).then((response)=>{
                 // console.log(response)
-                resolve(true)
+                resolve({status:true})
             })
         }
         })
@@ -216,8 +216,8 @@ module.exports = {
                     }
                 ])
                 .toArray();
-           console.log(total);
-            resolve(total);
+        //    console.log(total[0].total);
+            resolve(total[0].total);
         });
     }
 }
