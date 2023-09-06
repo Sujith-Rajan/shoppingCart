@@ -38,13 +38,16 @@
      
     $('#chekout-form').click=(e)=>{
         console.log("Form submitted");
-        e.preventDefault()
+        e.preventDefault() 
         $.ajax({
             url:'/place-order',
             method:'post',
             data:$('#chekout-form').serialize(),
             success:(response)=>{
-                alert(response)
+                {{!-- alert(response) --}}
+                if(response.status){
+                    location.href="/order-placed"
+                }
             }
         })
     }
