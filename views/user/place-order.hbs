@@ -1,6 +1,6 @@
 <section>
     <div class="container mt-5">
-        <form action="" id="chekout-form">
+        <form action="" id="chekout-form" method="post" >
             <div class="row">
                 <div class="col-md-6">
                     <h2>Enter Yor Details</h2>
@@ -11,6 +11,7 @@
                         <input class="form-control" type="text" id="pincode" name="pincode">
                         <label for="">Mobile</label>
                         <input class="from-control" type="tel" id="mobile" name="mobile">
+                        <input type="text" name="userId" id="userId" value="{{user._id}}" hidden>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -20,7 +21,7 @@
                         <div class="payment">
                             <p>Payment method</p>
                             <label class="radio-inline">
-                             <input type="radio" name="pament-method" value="COD" checked>COD
+                             <input type="radio" name="payment-method" value="COD" checked>COD
                             </label>
                             <label class="radio-inline mt-2">
                                 <input type="radio" name="payment-method" value="online">Online payment
@@ -33,3 +34,20 @@
         </form>
     </div>
 </section>
+<script>
+     
+    $('#chekout-form').click=(e)=>{
+        console.log("Form submitted");
+        e.preventDefault()
+        $.ajax({
+            url:'/place-order',
+            method:'post',
+            data:$('#chekout-form').serialize(),
+            success:(response)=>{
+                alert(response)
+            }
+        })
+    }
+     
+    
+</script>

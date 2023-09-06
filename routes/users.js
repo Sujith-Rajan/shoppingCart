@@ -100,6 +100,9 @@ router.post('/remove-item/', (req, res,next) => {
 }); 
 router.get('/place-order',verifyLogin,async (req,res)=>{
     let totalAmt= await signUps.getTotalAmount(req.session.user._id)
-    res.render('user/place-order',{totalAmt})
+    res.render('user/place-order',{totalAmt,user:req.session.user})
+})
+router.post('/place-order',(req,res)=>{
+    console.log(req.body)
 })
 module.exports = router;
