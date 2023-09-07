@@ -10,7 +10,7 @@
                         <label for="">Pincode</label>
                         <input class="form-control" type="text" id="pincode" name="pincode">
                         <label for="">Mobile</label>
-                        <input class="from-control" type="tel" id="mobile" name="mobile">
+                        <input class="form-control" type="tel" id="mobile" name="mobile">
                         <input type="text" name="userId" id="userId" value="{{user._id}}" hidden>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                             <label class="radio-inline mt-2">
                                 <input type="radio" name="payment-method" value="online">Online payment
                             </label>
-                            <button class="btn btn-primary float-right" type="submit">Chekout</button>
+                            <button type="submit" class="btn btn-primary mt-3" style="margin-left: 60%;">Checkout</button>
                         </div>
                     </div>
                 </div>
@@ -36,18 +36,19 @@
 </section>
 <script>
      
-    $('#chekout-form').click=(e)=>{
+    $('#chekout-form').submit=(e)=>{
         console.log("Form submitted");
         e.preventDefault() 
         $.ajax({
-            url:'/place-order',
-            method:'post',
+            url: '/place-order',
             data:$('#chekout-form').serialize(),
+            method:'post'
+            dataType: 'json',
             success:(response)=>{
-                {{!-- alert(response) --}}
-                if(response.status){
+                alert(response)
+                if(response.status)
                     location.href="/order-placed"
-                }
+                
             }
         })
     }
